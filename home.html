@@ -1,27 +1,85 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>IE Game Station</title>
-		<link rel="stylesheet" type="text/css" href="style/style.css">
-		<script src="js/jquery-2.2.3.min.js"></script>
-		<script src="js/home.js"></script>
-		<script src="js/chess.js"></script>
-		<script src="js/sudoku.js"></script>
-	</head>
-	<body>
-		<header>
-			GAME station: <span id="pwd">Home</span><span id="home-icon"> &#127968;</span>
-			<ul id="games">
-				<li>&#127918;</li>
-			</ul>
-		</header>
+<head>
+    <title>IE Game Station</title>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/chess.js"></script>
+    <script src="js/sudoku.js"></script>
 
-		<div id="main-container">
+    <script type="text/javascript">
+        window.onload = function () {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    myfunction(xhttp);
+                }
+            };
+            xhttp.open("GET", "http://ie.ce-it.ir/hw3/xml/home.xml", true);
+            xhttp.send();
 
-		</div>
-		
-		<footer>
-			Designer: Seyyed Ehsan Mokhtari (Mokhi) <br> &copy; 1395 - IE course JS project
-		</footer>
-	</body>
+        }
+
+        function myfunction(xml) {
+            var xmlDoc = xml.responseXML;
+            var txt = "";
+            var games = xmlDoc.getElementsByTagName("game");
+
+            for (var i = 0; i < games.length; i++) {
+                if (i < (games.length - 1)) {
+                    var name_of_game = games[(i + 1)].getElementsByTagName("name")[0].firstChild.data;
+                    var image = games[(i + 1)].getElementsByTagName("image")[0].firstChild.data;
+                    var online = games[(i + 1)].getElementsByTagName("onlines")[0].firstChild.data;
+                    var text = games[(i + 1)].getElementsByTagName("text")[0].firstChild.data;
+                    var text_color = games[(i + 1)].getElementsByTagName("text")[0].getAttribute("color");
+                    var text_color_hover = games[(i + 1)].getElementsByTagName("text")[0].getAttribute("hover");
+                    var active_games = games[(i + 1)].getAttribute("active");
+                    if (active_games == "true") {
+                        //create elements
+                        var div_game = document.createElement("div");
+                        var div_game_inner = document.createElement("div");
+                        var img = document.createElement("img");
+                        var name_of_game_p = document.createElement("p");
+                        //set attribute
+                        div_game.setAttribute("class", "game-block");
+                        div_game.setAttribute("id", "sudoku-block");
+                        div_game.setAttribute("data-onlines", online);
+                        div_game.setAttribute("data-name", name_of_game);
+                        div_game_inner.setAttribute("class", "game-image-container");
+                        img.src = image;
+//                        name_of_game_p.style.color = text_color;
+                        name_of_game_p.innerHTML = text;
+                        div_game_inner.appendChild(img);
+                        div_game_inner.appendChild(name_of_game_p);
+                        div_game.appendChild(div_game_inner);
+                        document.getElementById("main-container").appendChild(div_game);
+                    }
+                }
+            }
+        }
+
+
+    </script>
+
+</head>
+<body>
+
+<header>
+    GAME station: <span id="pwd">Home</span><span id="home-icon"> &#127968;</span>
+    <ul id="games">
+        <li>&#127918;</li>
+    </ul>
+</header>
+<div id="main-container">
+
+
+</div>
+<script>
+
+</script>
+<footer>
+
+</footer>
+</body>
 </html>
