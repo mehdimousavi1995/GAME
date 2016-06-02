@@ -1,129 +1,206 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>IE Game Station</title>
-		<link rel="stylesheet" type="text/css" href="../style/style.css">
-		<script src="../js/jquery-2.2.3.min.js"></script>
-		<script src="../js/home.js"></script>
-		<script src="../js/chess.js"></script>
-		<script src="../js/sudoku.js"></script>
-	</head>
-	<body>
-		<header>
-			GAME station: <span id="pwd">Home</span><span id="home-icon"> &#127968;</span>
-			<ul id="games">
-				<li>&#127918;</li>
-			</ul>
-		</header>
-		<div id="main-container">
-			<div id="sudoku">
-				<table>
-					<tr>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">2</td>
-						<td contenteditable="false">3</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">5</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">7</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">9</td>
-					</tr>
-					<tr>
-						<td contenteditable="false">4</td>
-						<td contenteditable="false">5</td>
-						<td contenteditable="false">6</td>
-						<td contenteditable="false">7</td>
-						<td contenteditable="false">8</td>
-						<td contenteditable="false">9</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-					</tr>
-					<tr>
-						<td contenteditable="false">7</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">9</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">2</td>
-						<td contenteditable="false">3</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-					</tr>
-					<tr>
-						<td contenteditable="false">2</td>
-						<td contenteditable="false">3</td>
-						<td contenteditable="false">4</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">6</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">8</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">1</td>
-					</tr>
-					<tr>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">9</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">3</td>
-						<td contenteditable="true"></td>
-					</tr>
-					<tr>
-						<td contenteditable="false">8</td>
-						<td contenteditable="false">9</td>
-						<td contenteditable="false">1</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">3</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">5</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">7</td>
-					</tr>
-					<tr>
-						<td contenteditable="false">3</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">8</td>
-						<td contenteditable="false">9</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-					</tr>
-					<tr>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">7</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">1</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">4</td>
-						<td contenteditable="true"></td>
-					</tr>
-					<tr>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">2</td>
-						<td contenteditable="false">3</td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="true"></td>
-						<td contenteditable="false">8</td>
-						</tr>
-				</table>
-			</div>
-			<div id="check-sudoku">Check it out!</div >
-			<div id="submit-sudoku">Submit</div >
-		</div>
-		<footer>
-			Designer: Seyyed Ehsan Mokhtari (<a href="http://mokhi.ir">Mokhi</a>) <br> &copy; 1395 - IE course JS project
-		</footer>
-	</body>
+<head>
+    <title>IE Game Station</title>
+    <style>
+        #chess:hover{
+            cursor: pointer;
+            color: red;
+
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="../style/style.css">
+    <script src="../js/jquery-2.2.3.min.js"></script>
+    <script src="../js/home.js"></script>
+    <script src="../js/chess.js"></script>
+    <script src="../js/sudoku.js"></script>
+</head>
+<body>
+<header>
+    <script>
+
+        function validate() {
+//            var check_some = new Array();
+//            $("tr").each(function (i, el_tr) {
+//                $(this).children().each(function (j, el_td) {
+//                            check_some[i][j] = $(el_td);
+//                        }
+//                );
+////            });
+//            var txt="f";
+//            for (var i = 0; i < 9; i++)
+//                for (var j = 0; j < 9; j++)
+//                    txt += check_some[i][j];
+
+        }
+        function change(sel) {
+            $("td[contenteditable=false]").css("background-color", "rgba(0, 192, 0, 0.10)").css("color","black");
+            $("td[contenteditable=true]").css("background-color", "transparent").css("color","black");
+            $("td").each(function () {
+                if ($(this).text() == sel)
+                    $(this).css("background-color", "red")
+                            .css("color","white");
+            });
+
+        }
+        $("document").ready(function () {
+
+            $("#check-sudoku").on("click", function () {
+                        var check_some = new Array(9);
+                        var check = new Array();
+                        for (var i = 0; i < check_some.length; i++)
+                            check_some[i] = new Array(9);
+                        $("tr").each(function (i, el_tr) {
+                            $(this).children().each(function (j, el_td) {
+                                check_some[i][j] = $(this).text();
+                            });
+                        });
+                        for (var i = 0; i < 9; i++)
+                            check[i] = "false";
+                        var txt = "";
+                        for (var i = 0; i < 9; i++) {
+                            for (var j = 0; j < 9; j++)
+                                txt += check_some[i][j] + ", ";
+
+                            txt += "\n";
+                        }
+                alert(txt);
+                    }
+            );
+
+            $("td").on("click", function () {
+                var selected = $(this).text();
+                if (selected > 0 && selected < 10)
+                    change(selected);
+
+            });
+            $("td").on("keypress", function (evt) {
+                var pressed_Key = String.fromCharCode(evt.charCode);
+                var last_content = $(this).text();
+                var present_content = last_content.concat(pressed_Key);
+                if (!((present_content > 0 && present_content < 9) || evt.which == 8)) {
+                    alert("please enter number between 0 to 9 ");
+                    $(this).text("");
+                }
+            });
+        });
+
+    </script>
+    GAME station: <span id="pwd">Home</span><span id="home-icon"> &#127968;</span>
+    <ul id="games">
+        <li>&#127918;</li>
+    </ul>
+</header>
+<p id="chess"> </p>
+<div id="main-container">
+    <div id="sudoku">
+        <table>
+            <tr>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">2</td>
+                <td contenteditable="false">3</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">5</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">7</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">9</td>
+            </tr>
+            <tr>
+                <td contenteditable="false">4</td>
+                <td contenteditable="false">5</td>
+                <td contenteditable="false">6</td>
+                <td contenteditable="false">7</td>
+                <td contenteditable="false">8</td>
+                <td contenteditable="false">9</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+            </tr>
+            <tr>
+                <td contenteditable="false">7</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">9</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">2</td>
+                <td contenteditable="false">3</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+            </tr>
+            <tr>
+                <td contenteditable="false">2</td>
+                <td contenteditable="false">3</td>
+                <td contenteditable="false">4</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">6</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">8</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">1</td>
+            </tr>
+            <tr>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">9</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">3</td>
+                <td contenteditable="true"></td>
+            </tr>
+            <tr>
+                <td contenteditable="false">8</td>
+                <td contenteditable="false">9</td>
+                <td contenteditable="false">1</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">3</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">5</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">7</td>
+            </tr>
+            <tr>
+                <td contenteditable="false">3</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">8</td>
+                <td contenteditable="false">9</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+            </tr>
+            <tr>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">7</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">1</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">4</td>
+                <td contenteditable="true"></td>
+            </tr>
+            <tr>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">2</td>
+                <td contenteditable="false">3</td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="false">8</td>
+            </tr>
+        </table>
+    </div>
+    <div id="check-sudoku">Check it out!</div>
+    <div id="submit-sudoku">Submit</div>
+</div>
+<footer>
+    Designer: Seyyed Ehsan Mokhtari (<a href="http://mokhi.ir">Mokhi</a>) <br> &copy; 1395 - IE course JS project
+</footer>
+</body>
 </html>
