@@ -1,5 +1,44 @@
 var _container, _header;
+var toggle = true;
+function _displayToggle() {
+    if (toggle) {
+        document.getElementById("li_sudoku").style.display = 'inline-block';
+        document.getElementById("li_chess").style.display = 'inline-block';
+        toggle = false;
+    }
+    else {
+        document.getElementById("li_sudoku").style.display = 'none';
+        document.getElementById("li_chess").style.display = 'none';
+        toggle = true;
+    }
+}
+function _addOnclick(element, name) {
+    var span =document.getElementById("pwd");
+    if (name == 'chess') {
+        element.onclick =function () {
+            display_chess();
+            span.innerHTML='HOME/CHESS';
+        }
+    }
 
+    else if (name == 'sudoku') {
+        element.onclick =function () {
+            displaySudoku();
+            span.innerHTML='HOME/SUDOKU';
+        }
+    }
+
+    else {
+        element.onclick =function () {
+            notImplemented();
+        }
+    }
+}
+function _setOnclick(element, _func) {
+    element.onclick = function () {
+        _func
+    }
+}
 function _hover(element_on, element, color, color_hover) {
     element.style.color = color;
     element_on.onmouseover = function () {
@@ -32,8 +71,8 @@ function myfunction(xml) {
     var game_color = header[0].getElementsByTagName("gameicon")[0].getElementsByTagName("game")[0].getAttribute("color");
     var game_color_hover = header[0].getElementsByTagName("gameicon")[0].getElementsByTagName("game")[0].getAttribute("hover");
 
-
     var game_icon = document.getElementById("games").firstElementChild;
+    game_icon.onclick = _displayToggle;
     _hover(game_icon, game_icon, gameicon_color, gameicon_color_hover);
 
     var name = xmlDoc.getElementsByTagName("name");
@@ -86,12 +125,14 @@ function myfunction(xml) {
             div_game.setAttribute("data-name", name_of_game);
             div_game_inner.setAttribute("class", "game-image-container");
             _hover(div_game, name_of_game_p, text_color, text_color_hover);
+            _addOnclick(div_game, name_of_game);
             if (active_game == "true") {
+                _hover(li, li, game_color, game_color_hover);
                 li.setAttribute("id", "li_" + name_of_game);
                 li.innerHTML = name_of_game;
                 li.style.color = game_color;
                 document.getElementById("games").appendChild(li);
-
+                _addOnclick(li, name_of_game);
                 url[name_of_game] = games[(i + 1)].getElementsByTagName("url")[0].firstChild.data;
             }
         }
@@ -107,36 +148,7 @@ function myfunction(xml) {
             max_online_name = name_of_game;
         }
     }
-    document.getElementById("sudoku").onclick = displaySudoku;
-    document.getElementById("chess").onclick = display_chess;
-    document.getElementById("snake").onclick = notImplemented;
-    document.getElementById("mario").onclick = notImplemented;
-    document.getElementById("maze").onclick = notImplemented;
 
-    var toggle = true;
-    game_icon.onclick = $().animate()
-    {
-        duration:400;
-        function step() {
-            if (toggle) {
-                document.getElementById("li_sudoku").style.display = 'inline-block';
-                document.getElementById("li_chess").style.display = 'inline-block';
-                toggle = false;
-            }
-            else {
-                document.getElementById("li_sudoku").style.display = 'none';
-                document.getElementById("li_chess").style.display = 'none';
-                toggle = true;
-            }
-        }
-
-
-    }
-    _hover(document.getElementById("li_sudoku"), document.getElementById("li_sudoku"), game_color, game_color_hover);
-    _hover(document.getElementById("li_chess"), document.getElementById("li_sudoku"), game_color, game_color_hover);
-
-    document.getElementById("li_chess").onclick = display_chess;
-    document.getElementById("li_sudoku").onclick = displaySudoku;
 
 //set attributes to game_container that have max_online clients
     document.getElementById(max_online_name).style.border
@@ -146,17 +158,17 @@ function myfunction(xml) {
     _container = document.getElementById("main-container");
     _header = document.body.firstElementChild;
 }
+
 function notImplemented() {
     document.getElementById("main-container").innerHTML = "This game is not implemented yet";
-    // var home_icon = document.getElementById("home-icon");
-    // home_icon.style.display = 'inline';
-    // home_icon.onclick = function () {
-    //     // re_build_home_page();
-    // };
+    var home_icon = document.getElementById("home-icon");
+    home_icon.style.display = 'inline';
 }
 
 function re_build_home_page() {
     document.body.appendChild(_header);
     document.body.appendChild(_container);
     document.getElementById("home-icon").style.display = 'none';
+    var span = document.getElementById("pwd");
+    span.innerHTML="HOME";
 }
