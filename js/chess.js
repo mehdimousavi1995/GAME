@@ -58,7 +58,7 @@ function initial() {
         var xsltProcessor = new XSLTProcessor();
         xsltProcessor.importStylesheet(xsl);
         var resultDocument = xsltProcessor.transformToFragment(xmlDoc, document);
-        document.getElementById("main-container").appendChild(resultDocument);
+        document.body.appendChild(resultDocument);
     }
     white_player_array = new Array();
     black_player_array = new Array();
@@ -134,7 +134,15 @@ function AnimateRotate(ang) {
     });
 }
 function display_chess() {
-    $("#main-container").empty();
+    $("#main-container").remove();
+    var home_icon=$("#home-icon");
+    home_icon.css("display","inline");
+    home_icon.on("click",function () {
+        $("body").empty();
+        re_build_home_page();
+    });
+
+
     $("document").ready(function () {
 
         var pawn_unicode = "&#9823;";

@@ -71,6 +71,13 @@ function table_is_full() {
 }
 function displaySudoku() {
     $("#main-container").remove();
+    var home_icon=$("#home-icon");
+    home_icon.css("display","inline");
+    home_icon.on("click",function () {
+        $("body").empty();
+        re_build_home_page();
+    });
+    
     var url = "http://ie.ce-it.ir/hw3/xml/sudoku.xml";
     var xslt_url = "http://ceit.aut.ac.ir/~9231018/build_sudoku.xslt.xml";
     var xmlDoc = loadXMLDoc(url);
