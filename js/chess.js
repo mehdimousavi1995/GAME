@@ -134,6 +134,7 @@ function AnimateRotate(ang) {
     });
 }
 function display_chess() {
+    $("#main-container").empty();
     $("document").ready(function () {
 
         var pawn_unicode = "&#9823;";
@@ -165,14 +166,13 @@ function display_chess() {
                 $(clicked_item).empty();
 
                 var clicked = search_peices(white_player_array, last_row, last_col);
-                
+
                 var row = this.getAttribute("row");
                 var col = this.getAttribute("col");
-                update_page(row,col,table,clicked.chess_piece_unicode);
+                update_page(row, col, table, clicked.chess_piece_unicode);
                 clicked_item = null;
-                
-                
-                
+
+
             }
             // var clicked_row = this.getAttribute("row");
             // var clicked_col = this.getAttribute("col");

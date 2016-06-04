@@ -46,7 +46,6 @@ function validate_col() {
     }
 }
 function validate(array1, check_index, checker) {
-
     var validate = new Array();
     var tr = $("tr");
     for (var j = 1; j < 10; j++)
@@ -55,7 +54,6 @@ function validate(array1, check_index, checker) {
         if (validate[array1[i]] == false)
             validate[array1[i]] = true;
         else {
-            alert("wrong ...");
             if (checker == "row")
                 $($(tr[check_index]).find("td")[i]).css("background", "red");
             else
@@ -71,10 +69,8 @@ function table_is_full() {
             return false;
     return true;
 }
-function displayResult() {
-    $("#sudoku").remove();
-    $("#chess").remove();
-
+function displaySudoku() {
+    $("#main-container").remove();
     var url = "http://ie.ce-it.ir/hw3/xml/sudoku.xml";
     var xslt_url = "http://ceit.aut.ac.ir/~9231018/build_sudoku.xslt.xml";
     var xmlDoc = loadXMLDoc(url);
@@ -88,20 +84,13 @@ function displayResult() {
         var xsltProcessor = new XSLTProcessor();
         xsltProcessor.importStylesheet(xsl);
         var resultDocument = xsltProcessor.transformToFragment(xmlDoc, document);
-        document.getElementById("main-container").appendChild(resultDocument);
+        document.body.appendChild(resultDocument);
     }
-    // var array1=[[]];
-    // [[1,1],[1,2],[1,3],[1,4],[1,5],[1,6],[1,7],[1,8],[1,9]];
-
-
     $("document").ready(function () {
         var tr = $("tr");
         var td = tr[0];
-
         $("#submit-sudoku").on("click", function () {
-
             if(table_is_full()){
-
                 var td = $("td");
                 var _cells = new Array();
                 for (var i = 0; i < td.length; i++) {
@@ -145,13 +134,11 @@ function displayResult() {
             else
                 alert("please fill the table and try again ... !");
         });
-
         $("td").on("click", function () {
             var selected = $(this).text();
             if (selected > 0 && selected < 10)
                 change(selected);
         });
-
         $("td").on("keypress", function (evt) {
             var pressed_Key = String.fromCharCode(evt.charCode);
             var last_content = $(this).text();

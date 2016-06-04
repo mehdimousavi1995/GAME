@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:template match="/sudoku">
-        <div id="sudoku">
-            <table id="sudoku_table">
-                <xsl:for-each select="row">
-                    <tr>
-                        <xsl:for-each select="cell">
-                            <xsl:choose>
-                                <xsl:when test="current() !=''">
-                                    <td contenteditable="false">
-                                        <xsl:value-of select="current()"/>
-                                    </td>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <td contenteditable="true"/>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:for-each>
-                    </tr>
-                </xsl:for-each>
-            </table>
-            <div id="check-sudoku">Check it out!</div>
-            <div id="submit-sudoku">Submit</div>
+        <div id="main-container">
+            <div id="sudoku">
+                <table id="sudoku_table">
+                    <xsl:for-each select="row">
+                        <tr>
+                            <xsl:for-each select="cell">
+                                <xsl:choose>
+                                    <xsl:when test="current() !=''">
+                                        <td contenteditable="false">
+                                            <xsl:value-of select="current()"/>
+                                        </td>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <td contenteditable="true"/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </tr>
+                    </xsl:for-each>
+                </table>
+                <div id="check-sudoku">Check it out!</div>
+                <div id="submit-sudoku">Submit</div>
+            </div>
         </div>
+
     </xsl:template>
 </xsl:stylesheet>
