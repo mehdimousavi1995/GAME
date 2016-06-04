@@ -32,6 +32,7 @@ function myfunction(xml) {
     document.getElementsByTagName("header")[0].style.backgroundColor = background;
     document.getElementById("home-icon").style.display = "none";
     document.getElementById("games").style.color = game_color;
+    
     var max_online_name = "", max_online = 0;
     for (var i = 0; i < games.length; i++) {
         if (i < (games.length - 1)) {

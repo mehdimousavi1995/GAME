@@ -180,6 +180,12 @@ ul#games {
     vertical-align: top;
 }
 
+#white-chessman-panel tr td, #black-chessman-panel tr td {
+    left: 23px;
+    top: 40px;
+    position: relative;
+}
+
 #chess #white-chessman-panel {
     color: white;
     background-color: #D59330;
