@@ -20,7 +20,6 @@ function _addOnclick(element, name) {
             span.innerHTML='HOME/CHESS';
         }
     }
-
     else if (name == 'sudoku') {
         element.onclick =function () {
             displaySudoku();
@@ -36,7 +35,7 @@ function _addOnclick(element, name) {
 }
 function _setOnclick(element, _func) {
     element.onclick = function () {
-        _func
+        _func;
     }
 }
 function _hover(element_on, element, color, color_hover) {
@@ -139,8 +138,9 @@ function myfunction(xml) {
         img.src = image;
         name_of_game_p.innerHTML = text;
         div_game_inner.appendChild(img);
-        div_game_inner.appendChild(name_of_game_p);
+
         div_game.appendChild(div_game_inner);
+        div_game.appendChild(name_of_game_p);
         document.getElementById("main-container").appendChild(div_game);
 
         if (online > max_online) {
@@ -153,7 +153,7 @@ function myfunction(xml) {
 //set attributes to game_container that have max_online clients
     document.getElementById(max_online_name).style.border
         = max_onlines_border_width + " " + max_onlines_border_color + " " + max_onlines_border_sytle;
-    document.getElementById(max_online_name).style.backgroundColor = max_onlines_background;
+    document.getElementById(max_online_name).style.background = max_onlines_background;
 
     _container = document.getElementById("main-container");
     _header = document.body.firstElementChild;

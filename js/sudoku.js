@@ -141,10 +141,18 @@ function displaySudoku() {
             else
                 alert("please fill the table and try again ... !");
         });
-        $("td").on("click", function () {
+        $("td").on("mouseover", function () {
             var selected = $(this).text();
             if (selected > 0 && selected < 10)
                 change(selected);
+        });
+        $("td").on("mouseout", function () {
+            var selected = $(this).text();
+            if (selected > 0 && selected < 10)
+            {
+                $("td[contenteditable=false]").css("background-color", "rgba(0, 192, 0, 0.10)").css("color", "black");
+                $("td[contenteditable=true]").css("background-color", "transparent").css("color", "black");
+            }
         });
         $("td").on("keypress", function (evt) {
             var pressed_Key = String.fromCharCode(evt.charCode);

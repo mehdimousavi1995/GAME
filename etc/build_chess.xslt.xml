@@ -3,31 +3,37 @@
         <div id="main-container">
             <div id="chess">
                 <div id="chess-info">
-                    <div class="score">white score: <span id="white-score"></span></div>
+                    <div class="score">white score:
+                        <span id="white-score"></span>
+                    </div>
                     <div id="turn" class="black">black</div>
-                    <div class="score">black score: <span id="black-score"></span></div>
+                    <div class="score">black score:
+                        <span id="black-score"></span>
+                    </div>
                 </div>
                 <div id="white-chessman-panel">
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
                 </div>
                 <table id="game_chess">
                 </table>
                 <div id="black-chessman-panel">
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
-                    <tr><td fill="false"></td><td fill="false"></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
+                    <tr><td></td><td></td></tr>
                 </div>
             </div>
         </div>
