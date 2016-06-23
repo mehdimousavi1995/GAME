@@ -109,7 +109,6 @@ function myfunction(xml) {
             var text_color_hover = games[(i + 1)].getElementsByTagName("text")[0].getAttribute("hover");
             var active_game = games[(i + 1)].getAttribute("active");
 
-
             //create elements
 
             var div_game = document.createElement("div");

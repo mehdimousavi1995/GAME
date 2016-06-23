@@ -2,8 +2,10 @@ var _last_row, _last_col, _new_row, _new_col;
 var turn = "";
 var white_score, black_score;
 var white_deleted, black_deleted;
-var rotate = 180;
+var white_promotion = false;
+var black_promotion = false;
 
+var rotate = 180;
 var white_player_array, black_player_array;
 
 var white_coordinate, black_coordinate;
@@ -40,9 +42,7 @@ function loadXMLDoc(filename) {
     return xhttp.responseXML;
 }
 
-function promotion(x, y) {
 
-}
 function add_pieces_to_player_field(player, array) {
     var name = "", row, col;
     var pieces = $(player).children();
@@ -133,10 +133,13 @@ function initial() {
 // ---FIRST INITIATE---------------------------------------------------------------
     add_pieces_to_player_field(black_player, black_player_array);
     add_pieces_to_player_field(white_player, white_player_array);
+
+    findout_number_of_dead_pieces(white_player_array, black_player_array, white_deleted, black_deleted);
+    update_panel(white_deleted, 'white-chessman-panel', 'white');
+    update_panel(black_deleted, 'black-chessman-panel', 'black');
     initial_page(black_player_array, "black");
     initial_page(white_player_array, "white");
     update_score();
-
 
     if (turn == "white")
         _setOnClick(white_player_array, table);
@@ -188,12 +191,17 @@ function td_click_handlerWithout() {
     _new_row = $(this).attr("row");
     _new_col = $(this).attr("col");
     $('#turn').toggleClass("black", "white");
+
     if (turn == "white") {
         kill(black_player_array, _new_col, _new_row);
         update_score();
         initial_score_page();
         update_player_table(white_player_array, _last_row, _last_col, _new_row, _new_col);
         update_table(black_player_array, white_player_array);
+        if (_new_row == '0') {
+            var ch = array_search(white_player_array, _new_row, _new_col);
+           promotion(ch);
+        }
         _setOnClick(black_player_array, $("#game_chess")[0]);
         $('#turn').text("black");
         turn = "black";
@@ -205,10 +213,15 @@ function td_click_handlerWithout() {
         $('#turn').text("white");
         update_player_table(black_player_array, _last_row, _last_col, _new_row, _new_col);
         update_table(black_player_array, white_player_array);
+        if (_new_row == '7') {
+            var ch = array_search(black_player_array, _new_row, _new_col);
+           promotion(ch);
+        }
         _setOnClick(white_player_array, $("#game_chess")[0]);
-
         turn = "white";
     }
+    update_panel(white_deleted, 'white-chessman-panel', 'white');
+    update_panel(black_deleted, 'black-chessman-panel', 'black');
 }
 
 function find_score_page(player, arr) {
@@ -219,7 +232,6 @@ function find_score_page(player, arr) {
     }
 }
 function initial_score_page() {
-    black_deleted.push(new chessman())
     var black = $('#black-chessman-panel');
     var white = $('#white-chessman-panel');
     find_score_page(black, black_deleted);
@@ -240,22 +252,149 @@ function kill(player, x, y) {
     var temp = array_search(player, y, x);
     if (temp != null) {
         if (turn == "white") {
-
             white_score.push(pieces_score(temp.name));
+            black_deleted.push(temp.name);
         }
         if (turn == "black") {
             black_score.push(pieces_score(temp.name));
+            white_deleted.push(temp.name);
         }
-        delete_peices(1,1,get_unicode("pawn"));
         player.splice(player.indexOf(temp), 1);
     }
 }
 
-function delete_peices(i,j,unicode) {
-    var black = $('#black-chessman-panel');
-    var white = $('#white-chessman-panel');
+function has_pieces(array, dead_array) {
+    var queen = false;
+    var rook = false;
+    var knight = false;
+    var bishop = false;
+    for (var i = 0; i < dead_array.length; i++) {
+        if (!queen && dead_array[i] == 'queen') {
+            array.push(dead_array[i]);
+            queen = true;
+            continue;
+        }
+        if (!rook && dead_array[i] == 'rook') {
+            array.push(dead_array[i]);
+            rook = true;
+            continue;
+        }
+        if (!knight && dead_array[i] == 'knight') {
+            array.push(dead_array[i]);
+            knight = true;
+            continue;
+        }
+        if (!bishop && dead_array[i] == 'bishop') {
+            array.push(dead_array[i]);
+            bishop = true;
+            continue;
+        }
 
-    $(black.children()[i]).children()[j].innerHTML=unicode;
+    }
+}
+
+function promotion(ch) {
+    var info = document.getElementById('information');
+
+    var span = document.createElement('span');
+    span.innerHTML = 'congratulation.... :)';
+    $(span).css('font-size', '19px');
+    info.appendChild(span);
+    var array = new Array();
+
+    // has_pieces(array,black_deleted);
+
+    array.push("queen");
+    array.push("rook");
+    array.push("bishop");
+    array.push("knight");
+
+    ch.name = 'queen';
+    ch.chess_piece_unicode = get_unicode('queen');
+    update_table(black_player_array, white_player_array);
+
+    // for (var i = 0; i < array.length; i++) {
+    //     var td = document.createElement('td');
+    //     td.innerHTML = get_unicode(array[i]);
+    //     $(td).css('color', color).css('margin', '5px').css('display', 'inline').css('cursor', 'pointer')
+    //         .on('click', function () {
+    //             alert(col+row);
+    //             var temp = array_search(white_player_array, col, row);
+    //             temp.name = 'queen';
+    //             temp.chess_piece_unicode = get_unicode('queen');
+    //             // update_score();
+    //             // initial_score_page();
+    //             update_player_table(white_player_array, _last_row, _last_col, _new_row, _new_col);
+    //             update_table(black_player_array, white_player_array);
+    //
+    //         });
+    //     info.appendChild(td)
+    // }
+}
+
+
+function update_panel(dead_pieces, name, color) {
+    var panel = document.getElementById(name);
+    var td = $(panel).find('td');
+    for (var i = 0; i < dead_pieces.length; i++) {
+        $(td[i]).css("color", color);
+        td[i].innerHTML = get_unicode(dead_pieces[i]);
+        // panel.appendChild(td);
+    }
+
+}
+
+function findout_number_of_dead_pieces(white_player, black_player, dead_white_array, dead_black_array) {
+    var white_pawn = 0, black_pawn = 0, white_bishop = 0, black_bishop = 0, white_rook = 0, black_rook = 0, white_queen = 0,
+        black_queen = 0, white_knight = 0, black_knight = 0;
+
+    for (var i = 0; i < white_player.length; i++) {
+        if (white_player[i].name == "pawn")
+            white_pawn++;
+        if (white_player[i].name == "knight")
+            white_knight++;
+        if (white_player[i].name == "rook")
+            white_rook++;
+        if (white_player[i].name == "bishop")
+            white_bishop++;
+        if (white_player[i].name == "queen")
+            white_queen++;
+    }
+    for (var i = 0; i < black_player.length; i++) {
+        if (black_player[i].name == "pawn")
+            black_pawn++;
+        if (black_player[i].name == "knight")
+            black_knight++;
+        if (black_player[i].name == "rook")
+            black_rook++;
+        if (black_player[i].name == "bishop")
+            black_bishop++;
+        if (black_player[i].name == "queen")
+            black_queen++;
+    }
+
+    for (var i = 0; i < 8 - white_pawn; i++)
+        dead_white_array.push("pawn");
+    for (var i = 0; i < 2 - white_bishop; i++)
+        dead_white_array.push("bishop");
+    for (var i = 0; i < 2 - white_knight; i++)
+        dead_white_array.push("knight");
+    for (var i = 0; i < 2 - white_rook; i++)
+        dead_white_array.push("rook");
+    for (var i = 0; i < 1 - white_queen; i++)
+        dead_white_array.push("queen");
+//----------
+
+    for (var i = 0; i < 8 - black_pawn; i++)
+        dead_black_array.push("pawn");
+    for (var i = 0; i < 2 - black_bishop; i++)
+        dead_black_array.push("bishop");
+    for (var i = 0; i < 2 - black_knight; i++)
+        dead_black_array.push("knight");
+    for (var i = 0; i < 2 - black_rook; i++)
+        dead_black_array.push("rook");
+    for (var i = 0; i < 1 - black_queen; i++)
+        dead_black_array.push("queen");
 }
 
 function _combine(player, movement) {
@@ -371,28 +510,20 @@ function queen_forward(x, y, array) {
 function king_forward(x, y, array) {
     if ((isValid(parseInt(x) - 1)) && (isValid(parseInt(y) - 1)) && highlight_cuter(parseInt(y) - 1, parseInt(x) - 1))
         array.push(new coordinate(parseInt(x) - 1), parseInt(y) - 1);
-
     if ((isValid(parseInt(x) + 1)) && (isValid(parseInt(y) + 1)) && highlight_cuter(parseInt(y) + 1, parseInt(x) + 1))
         array.push(new coordinate(parseInt(x) + 1), parseInt(y) + 1);
-
     if ((isValid(parseInt(x) + 1)) && (isValid(parseInt(y) - 1)) && highlight_cuter(parseInt(y) + 1, parseInt(x) - 1))
         array.push(new coordinate(parseInt(x) - 1), parseInt(y) + 1);
-
     if ((isValid(parseInt(x) - 1)) && (isValid(parseInt(y) + 1)) && highlight_cuter(parseInt(y) - 1, parseInt(x) + 1))
         array.push(new coordinate(parseInt(x) + 1), parseInt(y) - 1);
-
     if ((isValid(parseInt(x) - 1)) && (isValid(parseInt(y) + 1)) && highlight_cuter(parseInt(y) - 1, parseInt(x) + 1))
         array.push(new coordinate(parseInt(x) + 1), parseInt(y) - 1);
-
     if ((isValid(parseInt(x) - 1)) && (isValid(parseInt(y) - 1)) && highlight_cuter(parseInt(y) - 1, parseInt(x) - 1))
         array.push(new coordinate(parseInt(x) - 1), parseInt(y) - 1);
-
     if ((isValid(parseInt(x) + 1)) && (isValid(parseInt(y) + 1)) && highlight_cuter(parseInt(y) + 1, parseInt(x) + 1))
         array.push(new coordinate(parseInt(x) + 1), parseInt(y) + 1);
-
     if ((isValid(parseInt(x) - 1)) && (isValid(parseInt(y) - 1)) && highlight_cuter(parseInt(x) - 2, parseInt(y) - 1))
         array.push(new coordinate(parseInt(y) - 1), parseInt(x) - 2);
-
 }
 
 function assign_forward(name, arr, _x, _y) {
@@ -451,7 +582,6 @@ function initial_table(table) {
         }
     }
 }
-
 function initial_page(player, color) {
     var table = document.getElementById("game_chess");
     var tr = $(table).find("tr");
@@ -464,7 +594,6 @@ function initial_page(player, color) {
         }
     }
 }
-
 function display_chess() {
     $("#main-container").remove();
     var home_icon = $("#home-icon");
@@ -477,7 +606,6 @@ function display_chess() {
         initial();
     });
 }
-
 function AnimateRotate(ang) {
     var angle = ang;
     var $elem = $('#game_chess');
