@@ -8,7 +8,7 @@ var name_promotion = null;
 var king_clicked_white = false;
 var king_clicked_black = false;
 
-var king_clicked=false;
+var king_clicked = false;
 
 var _last_row, _last_col, _new_row, _new_col;
 var turn = "";
@@ -16,13 +16,11 @@ var white_score, black_score;
 var white_deleted, black_deleted;
 
 
-
 var white_promotion = false;
 var black_promotion = false;
 
 var rotate = 180;
 var white_player_array, black_player_array;
-
 var white_coordinate, black_coordinate;
 
 class chessman {
@@ -168,7 +166,6 @@ function highlight(col, row, name) {
         $(search(array[i].y_coordinate, array[i].x_coordinate, $("#game_chess")[0])).css("opacity", "0.7");
 }
 
-
 function _setOnClick(arr, table) {
     for (var i = 0; i < arr.length; i++) {
         $(search(arr[i].y, arr[i].x, table)).on("click", td_click_handler);
@@ -191,8 +188,6 @@ function casteling_is_valid() {
         if (array_search(black_player_array, 0, 0).name == 'rook' && array_search(black_player_array, 0, 3).name == 'king')
             return true;
 }
-
-
 function td_click_handler() {
     _last_row = $(this).attr("row");
     _last_col = $(this).attr("col");
@@ -203,9 +198,8 @@ function td_click_handler() {
             if (space_between_king_and_rook_is_empty() && casteling_is_valid()) {
                 $(search(7, 0, $("#game_chess")[0])).css("opacity", "0.9").css("color", "purple");
                 $(search(7, 3, $("#game_chess")[0])).css("opacity", "0.9").css("color", "purple");
-                king_clicked=true;
+                king_clicked = true;
             }
-
         }
         highlight(parseInt(_last_col), parseInt(_last_row), name);
         _setOnClickWithout($("#game_chess")[0], _last_row, _last_col);
@@ -216,7 +210,7 @@ function td_click_handler() {
             if (space_between_king_and_rook_is_empty() && casteling_is_valid()) {
                 $(search(0, 0, $("#game_chess")[0])).css("opacity", "0.9").css("color", "purple");
                 $(search(0, 3, $("#game_chess")[0])).css("opacity", "0.9").css("color", "purple");
-                king_clicked=true;
+                king_clicked = true;
             }
         }
         highlight(parseInt(_last_col), parseInt(_last_row), name);
@@ -229,17 +223,15 @@ function _setOnClickWithout(arr, table) {
     for (var i = 0; i < arr.length; i++) {
         $(search(arr[i].y, arr[i].x, table)).off("click", td_click_handlerWithout);
     }
+
     if (turn == 'white' && king_clicked == true)
         $(search(7, 0, table)).on("click", td_click_handlerWithout);
 
-     else if (turn == 'black' && king_clicked == true)
+    else if (turn == 'black' && king_clicked == true)
         $(search(0, 0, table)).on("click", td_click_handlerWithout);
 
 }
 function td_click_handlerWithout() {
-    // AnimateRotate();
-    // space_between_king_and_rook_is_empty();
-
     $('td').prop('onclick', null).off('click');
     _new_row = $(this).attr("row");
     _new_col = $(this).attr("col");
